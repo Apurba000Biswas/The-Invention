@@ -1,11 +1,14 @@
 package com.example.apurba.theinvention.theinvention;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.apurba.theinvention.theinvention.data.InventoryDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Ok i am on", Toast.LENGTH_SHORT).show();
+                InventoryDbHelper mDbHelper = new InventoryDbHelper(MainActivity.this);
+                SQLiteDatabase db = mDbHelper.getReadableDatabase();
+                Toast.makeText(MainActivity.this, "Database Created : " + mDbHelper.getDatabaseName() + "Version: " + db.getVersion(), Toast.LENGTH_SHORT).show();
             }
         });
     }

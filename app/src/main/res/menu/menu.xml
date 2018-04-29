@@ -7,12 +7,12 @@
     tools:context=".CatalogActivity">
 
     <item
-        android:id="@+id/action_insert_dummy_data"
+        android:id="@+id/action_insert_sample_invention"
         android:title="@string/action_insert_dummy_invention"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_delete_all_entries"
+        android:id="@+id/action_delete_all_invention"
         android:title="@string/action_delete_all_inventions"
         app:showAsAction="never" />
 </menu>

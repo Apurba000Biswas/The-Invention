@@ -1,7 +1,7 @@
 package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,18 +11,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
-import com.example.apurba.theinvention.theinvention.data.InventoryDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    private InventoryDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDbHelper = new InventoryDbHelper(this);
         setUpFabButton();
     }
 
@@ -55,8 +52,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertSampleInvention(){
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = getContentValues();
+        Uri responeUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
+        if (responeUri == null){
+            //faild
+            Toast.makeText(this, "Error with inserting Invention", Toast.LENGTH_SHORT).show();
+        }else{
+            // succesfull
+            Toast.makeText(this, "Invention saved", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private ContentValues getContentValues(){
         //create content values to put in the database
         ContentValues values = new ContentValues();
         values.put(InventoryEntry.COLUMN_INVENTORY_NAME, "The Invention");
@@ -66,14 +73,6 @@ public class MainActivity extends AppCompatActivity {
         values.put(InventoryEntry.COLUMN_INVENTORY_PLATFORM, "Android app");
         values.put(InventoryEntry.COLUMN_INVENTORY_TYPE, "Computer Software");
 
-        //insert(String table, String nullColumnHack, ContentValues values)
-        //The second argument provides the name of a column in which the framework
-        // can insert NULL in the event that the ContentValues is empty (if
-        // this is set to "null", then the framework will not insert a row when
-        // there are no values).
-        long rowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
-        if (rowId > 0){
-            Toast.makeText(this, "Ok inserted sample data in " + rowId, Toast.LENGTH_SHORT).show();
-        }
+        return values;
     }
 }

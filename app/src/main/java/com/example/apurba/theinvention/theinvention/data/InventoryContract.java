@@ -18,7 +18,6 @@ public class InventoryContract {
     public static final String PATH_INVENTORY = "inventory";
 
 
-
     // define inventory table schema
     public static final class InventoryEntry implements BaseColumns{
 

@@ -20,10 +20,8 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
-        <item name="android:textColor">#FFFFFF</item>
+    <style name="CustomSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/manu</item>
     </style>
 
 </resources>

@@ -3,4 +3,5 @@
 
     <string name="action_insert_dummy_invention">Insert sample invention</string>
     <string name="action_delete_all_inventions">delete all inventions</string>
+    <string name="action_blank">Blank invention</string>
 </resources>

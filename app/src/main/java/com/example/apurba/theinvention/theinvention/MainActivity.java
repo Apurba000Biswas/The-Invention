@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +33,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mCursorAdapter = new InventoryCursorAdapter(this, null);
         inventionListView.setAdapter(mCursorAdapter);
 
+        setListViewToClickResponse(inventionListView);
+
         getSupportLoaderManager().initLoader(INVENTION_LOADER, null, this);
+    }
+
+    private void setListViewToClickResponse(ListView list){
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "id : " + id, Toast.LENGTH_SHORT ).show();
+            }
+        });
     }
 
     private void setUpFabButton(){

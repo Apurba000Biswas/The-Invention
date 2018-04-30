@@ -41,6 +41,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper{
                 InventoryEntry.COLUMN_INVENTORY_PLATFORM + " TEXT NOT NULL, " +
                 InventoryEntry.COLUMN_INVENTORY_TYPE + " TEXT);";
         Log.v(LOG_TAG,SQL_CREATE_INVENTORY_TABLE);
+        //String SQL_DROP_TABLE = "DROP TABLE " + InventoryEntry.TABLE_NAME + ";";
         db.execSQL(SQL_CREATE_INVENTORY_TABLE);
     }
 

@@ -1,6 +1,7 @@
 package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,6 +28,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageView manu = findViewById(R.id.manu);
+        manu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "ok clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         setUpFabButton();
 
@@ -42,7 +52,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "id : " + id, Toast.LENGTH_SHORT ).show();
+                //Toast.makeText(MainActivity.this, "id : " + id, Toast.LENGTH_SHORT ).show();
+                Intent detailsInent = new Intent(MainActivity.this, InventoryDetailsActivity.class);
+                startActivity(detailsInent);
             }
         });
     }

@@ -1,19 +1,25 @@
 package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+    private static final int INVENTION_LOADER = 0;
+    private InventoryCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpFabButton();
+
+        ListView inventionListView = findViewById(R.id.invention_list);
+        mCursorAdapter = new InventoryCursorAdapter(this, null);
+        inventionListView.setAdapter(mCursorAdapter);
+
+        getSupportLoaderManager().initLoader(INVENTION_LOADER, null, this);
     }
 
     private void setUpFabButton(){
@@ -74,5 +86,28 @@ public class MainActivity extends AppCompatActivity {
         values.put(InventoryEntry.COLUMN_INVENTORY_TYPE, "Computer Software");
 
         return values;
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // make projection how many column we are interested now
+        String[]projection = {InventoryEntry._ID, InventoryEntry.COLUMN_INVENTORY_NAME, InventoryEntry.COLUMN_STATUS};
+        //CursorLoader(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
+        return new CursorLoader(this,
+                InventoryEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }

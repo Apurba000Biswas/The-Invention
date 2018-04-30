@@ -66,7 +66,8 @@ public class InventoryProvider extends ContentProvider{
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
         }
-        return null;
+        cursor.setNotificationUri(getContext().getContentResolver(),uri);
+        return cursor;
     }
 
     @Nullable

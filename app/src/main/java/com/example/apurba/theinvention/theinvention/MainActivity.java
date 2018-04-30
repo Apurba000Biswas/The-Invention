@@ -1,6 +1,7 @@
 package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.apurba.theinvention.theinvention.data.InventoryContract;
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -28,9 +30,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUpMenu();
+        //setUpMenu();
 
         setUpFabButton();
+
+        ImageView addSampleInventory = findViewById(R.id.add_sample);
+        addSampleInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertSampleInvention();
+            }
+        });
+
+        ImageView removeAll = findViewById(R.id.remove_all);
+        removeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Remove all clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         ListView inventionListView = findViewById(R.id.invention_list);
         mCursorAdapter = new InventoryCursorAdapter(this, null);
@@ -41,6 +59,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportLoaderManager().initLoader(INVENTION_LOADER, null, this);
     }
 
+    private void insertSampleInvention(){
+        ContentValues values = getContentValues();
+        Uri responeUri = getContentResolver().insert(InventoryContract.InventoryEntry.CONTENT_URI, values);
+        if (responeUri == null){
+            //faild
+            Toast.makeText(this, "Error with inserting Invention", Toast.LENGTH_SHORT).show();
+        }else{
+            // succesfull
+            Toast.makeText(this, "Sample Invention saved", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private ContentValues getContentValues(){
+        //create content values to put in the database
+        ContentValues values = new ContentValues();
+        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_NAME, "The Invention");
+        values.put(InventoryContract.InventoryEntry.COLUMN_STATUS, InventoryContract.InventoryEntry.STATUS_RUNNING);
+        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_URL, "no url yet");
+        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_DESCRIPTION, "This is all about new creation");
+        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PLATFORM, "Android app");
+        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_TYPE, "Computer Software");
+
+        return values;
+    }
+
+    /**
     private void setUpMenu(){
         ImageView settings = findViewById(R.id.settings);
         settings.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(detailsInent);
             }
         });
-    }
+    }**/
 
 
 

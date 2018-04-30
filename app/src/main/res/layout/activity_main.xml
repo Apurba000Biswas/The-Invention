@@ -22,13 +22,24 @@
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:text="The Invention"/>
+
         <ImageView
-            android:id="@+id/settings"
-            android:layout_marginTop="30dp"
-            android:layout_alignParentRight="true"
+            android:id="@+id/add_sample"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@id/remove_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/manu"/>
+            android:layout_marginTop="35dp"
+            android:src="@drawable/add_sample_data"/>
+
+        <ImageView
+            android:id="@+id/remove_all"
+            android:layout_marginTop="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/remove_all"/>
 
     </RelativeLayout>
 

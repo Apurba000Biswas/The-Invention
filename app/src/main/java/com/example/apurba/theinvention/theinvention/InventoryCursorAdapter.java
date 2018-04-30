@@ -37,7 +37,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
 
         String nameStr = cursor.getString(nameColumnIndex);
         int statusInt = cursor.getInt(statusColumnIndex);
-        String statusStr = getStatus(statusInt);
+        String statusStr = InventoryContract.InventoryEntry.getValidStatus(statusInt);
 
         name.setText(nameStr);
         status.setText(statusStr);

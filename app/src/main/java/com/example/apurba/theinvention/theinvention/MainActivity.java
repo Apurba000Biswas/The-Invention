@@ -1,6 +1,6 @@
 package com.example.apurba.theinvention.theinvention;
 
-import android.content.ContentValues;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,14 +10,11 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
@@ -54,29 +51,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
     }
-    private void insertSampleInvention(){
-        ContentValues values = getContentValues();
-        Uri responeUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-        if (responeUri == null){
-            //faild
-            Toast.makeText(this, "Error with inserting Invention", Toast.LENGTH_SHORT).show();
-        }else{
-            // succesfull
-            Toast.makeText(this, "Invention saved", Toast.LENGTH_SHORT).show();
-        }
-    }
-    private ContentValues getContentValues(){
-        //create content values to put in the database
-        ContentValues values = new ContentValues();
-        values.put(InventoryEntry.COLUMN_INVENTORY_NAME, "The Invention");
-        values.put(InventoryEntry.COLUMN_STATUS, InventoryEntry.STATUS_RUNNING);
-        values.put(InventoryEntry.COLUMN_INVENTORY_URL, "no url yet");
-        values.put(InventoryEntry.COLUMN_INVENTORY_DESCRIPTION, "This is all about new creation");
-        values.put(InventoryEntry.COLUMN_INVENTORY_PLATFORM, "Android app");
-        values.put(InventoryEntry.COLUMN_INVENTORY_TYPE, "Computer Software");
-
-        return values;
-    }
 
 
 
@@ -86,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 //Toast.makeText(MainActivity.this, "id : " + id, Toast.LENGTH_SHORT ).show();
                 Intent detailsInent = new Intent(MainActivity.this, InventoryDetailsActivity.class);
+                Uri uri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
+                detailsInent.setData(uri);
                 startActivity(detailsInent);
             }
         });

@@ -59,5 +59,18 @@ public class InventoryContract {
             }
             return false;
         }
+
+        public static String getValidStatus(int status){
+            switch (status){
+                case InventoryContract.InventoryEntry.STATUS_COMPLETE:
+                    return "Project Complete";
+                case InventoryContract.InventoryEntry.STATUS_RUNNING:
+                    return "Currently Running";
+                case InventoryContract.InventoryEntry.STATUS_IN_FUTURE:
+                    return "Stacked - For future";
+                default:
+                    return "Unknown";
+            }
+        }
     }
 }

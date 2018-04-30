@@ -10,20 +10,21 @@
         android:id="@+id/header"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="90dp">
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:text="The Invention"/>
         <ImageView
             android:id="@+id/settings"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

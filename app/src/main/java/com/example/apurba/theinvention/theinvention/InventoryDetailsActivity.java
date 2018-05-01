@@ -92,7 +92,6 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
                 deleteInvention();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -103,7 +102,7 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
                 null,           // selection
                 null);    // selectionArgs
         if (rowsDeleted != 0){
-            Toast.makeText(this, "" + mName + " deleted succesfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + mName + " deleted successfully", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(this, "Error with deleting " + mName, Toast.LENGTH_SHORT).show();
         }

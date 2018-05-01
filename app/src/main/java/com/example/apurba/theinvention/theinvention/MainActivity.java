@@ -48,9 +48,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         removeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Remove all clicked", Toast.LENGTH_SHORT).show();
+                deleteAllInventions();
             }
         });
+    }
+
+    private void deleteAllInventions(){
+        int rowsDeleted = 0;
+        rowsDeleted = getContentResolver().delete(
+                InventoryEntry.CONTENT_URI,  // uri
+                null,           // selection
+                null);    // selectionArgs
+        if (rowsDeleted != 0){
+            Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Error with deleting All inventions", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setUpSampleInventory(){

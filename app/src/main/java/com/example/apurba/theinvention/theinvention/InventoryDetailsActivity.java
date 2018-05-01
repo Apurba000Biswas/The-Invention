@@ -1,5 +1,6 @@
 package com.example.apurba.theinvention.theinvention;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -34,7 +36,7 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     private TextView statusTexView;
     private TextView urlTextView;
     private TextView descTextView;
-    private TextView plarformTextView;
+    private TextView platformTextView;
     private TextView typeTextView;
 
     private String mName;
@@ -49,12 +51,12 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mCollapsingToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+        mCollapsingToolBar = findViewById(R.id.collapse_toolbar);
 
         statusTexView = findViewById(R.id.status);
         urlTextView = findViewById(R.id.url);
         descTextView = findViewById(R.id.description);
-        plarformTextView = findViewById(R.id.platform);
+        platformTextView = findViewById(R.id.platform);
         typeTextView = findViewById(R.id.type);
 
         setUpEditInvention();
@@ -89,10 +91,33 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_delete_invention:
-                deleteInvention();
+                showDeleteConfirmationDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDeleteConfirmationDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_this_invention_dialog_msg);
+        // for positive button
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteInvention();
+            }
+        });
+        // for negative button
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void deleteInvention(){
@@ -153,7 +178,7 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
         statusTexView.setText(InventoryEntry.getValidStatus(status));
         urlTextView.setText(url);
         descTextView.setText(description);
-        plarformTextView.setText(platform);
+        platformTextView.setText(platform);
         typeTextView.setText(type);
     }
 
@@ -162,7 +187,7 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
         statusTexView.setText("");
         urlTextView.setText("");
         descTextView.setText("");
-        plarformTextView.setText("");
+        platformTextView.setText("");
         typeTextView.setText("");
     }
 }

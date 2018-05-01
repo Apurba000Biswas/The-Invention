@@ -2,6 +2,7 @@ package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,8 @@ import com.example.apurba.theinvention.theinvention.data.InventoryContract.Inven
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final int INVENTION_LOADER = 0;
     private InventoryCursorAdapter mCursorAdapter;
+
+    private int mSize = -10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,36 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         removeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mSize == 0){
+                    Toast.makeText(MainActivity.this, "Nothing to delete here", Toast.LENGTH_SHORT).show();
+                }else {
+                    showDeleteConfirmationDialog();
+                }
+            }
+        });
+    }
+
+    private void showDeleteConfirmationDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_all_invention_dialog_message);
+        // for positive button
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 deleteAllInventions();
             }
         });
+        // for negative button
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void deleteAllInventions(){
@@ -71,9 +102,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         addSampleInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showSampleInsertConfirmationDialog();
+            }
+        });
+    }
+    private void showSampleInsertConfirmationDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.insert_sample_invention_dialog_msg);
+        // for positive button
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 insertSampleInvention();
             }
         });
+        // for negative button
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void insertSampleInvention(){
@@ -87,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             Toast.makeText(this, "Sample Invention saved", Toast.LENGTH_SHORT).show();
         }
     }
+
     private ContentValues getContentValues(){
         //create content values to put in the database
         ContentValues values = new ContentValues();
@@ -99,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         return values;
     }
-
 
     private void setListViewToClickResponse(ListView list){
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,8 +194,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursorAdapter.swapCursor(data);
+        mSize = data.getCount();
     }
-
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCursorAdapter.swapCursor(null);

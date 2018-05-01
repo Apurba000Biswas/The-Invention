@@ -8,4 +8,14 @@
     <string name="action_complete">Project Complete</string>
     <string name="action_running">Currently Running</string>
     <string name="action_in_future">Stacked - For future</string>
+
+    <string name="delete_all_invention_dialog_message">Delete all inventions ?</string>
+    <string name="delete_this_invention_dialog_msg">Delete this invention ?</string>
+    <string name="insert_sample_invention_dialog_msg">Insert sample invention ?</string>
+
+
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

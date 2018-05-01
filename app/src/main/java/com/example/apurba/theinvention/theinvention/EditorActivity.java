@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
@@ -64,6 +65,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         if (selectedInventUri != null ){
             getSupportLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
+        }else {
+            TextView header = findViewById(R.id.editor_header);
+            header.setText("Add a new invention");
         }
         setUpSaveButton();
     }

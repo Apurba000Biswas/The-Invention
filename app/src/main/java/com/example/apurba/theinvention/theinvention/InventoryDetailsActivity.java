@@ -12,8 +12,11 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
@@ -33,6 +36,8 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     private TextView descTextView;
     private TextView plarformTextView;
     private TextView typeTextView;
+
+    private String mName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +80,37 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_delete_invention:
+                deleteInvention();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteInvention(){
+        int rowsDeleted = 0;
+        rowsDeleted = getContentResolver().delete(
+                selectedInventoryUri,  // uri
+                null,           // selection
+                null);    // selectionArgs
+        if (rowsDeleted != 0){
+            Toast.makeText(this, "" + mName + " deleted succesfully", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Error with deleting " + mName, Toast.LENGTH_SHORT).show();
+        }
+        finish();
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {InventoryEntry._ID,
         InventoryEntry.COLUMN_INVENTORY_NAME,
@@ -102,14 +138,14 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
             int platformColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_PLATFORM);
             int typeColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_TYPE);
 
-            String name = data.getString(nameColIndex);
+            mName = data.getString(nameColIndex);
             int status = data.getInt(statusColIndex);
             String url = data.getString(urlColIndex);
             String description = data.getString(descColIndex);
             String platform = data.getString(platformColIndex);
             String type = data.getString(typeColIndex);
 
-            mCollapsingToolBar.setTitle(name);
+            mCollapsingToolBar.setTitle(mName);
             setAllViews(status, url, description, platform, type);
         }
     }

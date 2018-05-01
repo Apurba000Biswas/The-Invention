@@ -128,8 +128,29 @@ public class InventoryProvider extends ContentProvider{
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsDeleted;
+        switch (match){
+            case INVENTORY:
+                //delete all row in this table
+                rowsDeleted = db.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case INVENTORY_ID:
+                // delete single row
+                selection = InventoryEntry._ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                rowsDeleted = db.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+        // notifie all listeners that data has changed for the pet content Uri
+        if (rowsDeleted != 0){
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override

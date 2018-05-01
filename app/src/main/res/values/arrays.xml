@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="array_menu_options">
-        <item>@string/action_blank</item>
-        <item>@string/action_insert_dummy_invention</item>
-        <item>@string/action_delete_all_inventions</item>
+        <item>@string/action_delete_invention</item>
     </string-array>
 
     <string-array name="status_option">

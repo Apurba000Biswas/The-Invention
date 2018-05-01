@@ -133,7 +133,53 @@ public class InventoryProvider extends ContentProvider{
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String selection, @Nullable String[] selectionArgs) {
+        final int match = sUriMatcher.match(uri);
+        switch (match){
+            case INVENTORY:
+                return updateInvention(uri, contentValues, selection, selectionArgs);
+            case INVENTORY_ID:
+                selection = InventoryEntry._ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri)) };
+                return updateInvention(uri, contentValues, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+    }
+
+    private int updateInvention(Uri uri, ContentValues values, String selection, String[] selectionArgs){
+        // check for name is not null
+        if (values.containsKey(InventoryEntry.COLUMN_INVENTORY_NAME)){
+            String name = values.getAsString(InventoryEntry.COLUMN_INVENTORY_NAME);
+            if (TextUtils.isEmpty(name)){
+                throw new IllegalArgumentException("Inventory requires a name");
+            }
+        }
+        // check for status in not null
+        if (values.containsKey(InventoryEntry.COLUMN_INVENTORY_NAME)){
+            Integer status= values.getAsInteger(InventoryEntry.COLUMN_STATUS);
+            if (status == null || !InventoryEntry.isValidStatus(status)){
+                throw new IllegalArgumentException("Inventory requires a name");
+            }
+        }
+        // checke for paltform
+        if (values.containsKey(InventoryEntry.COLUMN_INVENTORY_PLATFORM)){
+            String platform = values.getAsString(InventoryEntry.COLUMN_INVENTORY_PLATFORM);
+            if (TextUtils.isEmpty(platform)){
+                throw new IllegalArgumentException("Platform can not be empty");
+            }
+        }
+        // If there are no values to update, then no need to update the database
+        if (values.size() == 0) {
+            return 0;
+        }
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int rowsUpdated = db.update(InventoryEntry.TABLE_NAME, values, selection, selectionArgs);
+        // notifie all listeners that data has changed for the pet content Uri
+        if (rowsUpdated != 0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+        return rowsUpdated;
     }
 }

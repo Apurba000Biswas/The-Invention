@@ -86,12 +86,26 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private void saveInvention(){
         ContentValues values = getContentValues();
-
-        Uri responseUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-        if (responseUri == null){
-            Toast.makeText(this, "Eror with saving invention", Toast.LENGTH_SHORT).show();
+        if (selectedInventUri == null){
+            // perfrom insertion
+            Uri responseUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
+            if (responseUri == null){
+                // faild
+                Toast.makeText(this, "Eror with saving invention", Toast.LENGTH_SHORT).show();
+            }else{
+                // successfull
+                Toast.makeText(this, "Invention saved", Toast.LENGTH_SHORT).show();
+            }
         }else{
-            Toast.makeText(this, "Invention saved", Toast.LENGTH_SHORT).show();
+            // perfrom update
+            int rowsUpdated = getContentResolver().update(selectedInventUri, values, null, null);
+            if (rowsUpdated == 0){
+                // faild
+                Toast.makeText(this, "Eror with updating invention", Toast.LENGTH_SHORT).show();
+            }else {
+                // successfull
+                Toast.makeText(this, "Invention updated", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

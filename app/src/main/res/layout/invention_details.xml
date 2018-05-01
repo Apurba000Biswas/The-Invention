@@ -55,9 +55,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/edit_invention"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:src="@drawable/edit_invention"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|right|end" />
 

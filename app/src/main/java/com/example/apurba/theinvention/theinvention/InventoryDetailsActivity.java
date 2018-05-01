@@ -1,17 +1,21 @@
 package com.example.apurba.theinvention.theinvention;
 
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
@@ -36,12 +40,30 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
 
         mCollapsingToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
 
+
+
+        setUpEditInvention();
+
         Intent intent = getIntent();
         selectedInventoryUri = intent.getData();
 
         if (selectedInventoryUri != null ){
             getSupportLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
         }
+    }
+
+    private void setUpEditInvention(){
+        FloatingActionButton editButton = findViewById(R.id.edit_invention);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(InventoryDetailsActivity.this, "edit clciked", Toast.LENGTH_SHORT).show();
+                Intent editorInent = new Intent(InventoryDetailsActivity.this, EditorActivity.class);
+                //Uri uri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
+                //detailsInent.setData(uri);
+                startActivity(editorInent);
+            }
+        });
     }
 
     @Override

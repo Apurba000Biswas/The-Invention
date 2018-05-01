@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.apurba.theinvention.theinvention.MainActivity">
 
     <RelativeLayout
@@ -17,9 +17,7 @@
             android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:textSize="24sp"
-            android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:text="The Invention"/>
 
@@ -30,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
-            android:src="@drawable/add_sample_data"/>
+            android:src="@drawable/fab_button"/>
 
         <ImageView
             android:id="@+id/remove_all"
@@ -41,7 +39,9 @@
             android:layout_height="wrap_content"
             android:src="@drawable/remove_all"/>
 
+
     </RelativeLayout>
+
 
     <ListView
         android:layout_below="@id/header"

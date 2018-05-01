@@ -30,25 +30,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //setUpMenu();
-
         setUpFabButton();
-
-        ImageView addSampleInventory = findViewById(R.id.add_sample);
-        addSampleInventory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                insertSampleInvention();
-            }
-        });
-
-        ImageView removeAll = findViewById(R.id.remove_all);
-        removeAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Remove all clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setUpSampleInventory();
+        setUpRemoveAllInventory();
 
         ListView inventionListView = findViewById(R.id.invention_list);
         mCursorAdapter = new InventoryCursorAdapter(this, null);
@@ -57,6 +41,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setListViewToClickResponse(inventionListView);
 
         getSupportLoaderManager().initLoader(INVENTION_LOADER, null, this);
+    }
+
+    private void setUpRemoveAllInventory(){
+        ImageView removeAll = findViewById(R.id.remove_all);
+        removeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Remove all clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setUpSampleInventory(){
+        ImageView addSampleInventory = findViewById(R.id.add_sample);
+        addSampleInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertSampleInvention();
+            }
+        });
     }
 
     private void insertSampleInvention(){
@@ -83,19 +87,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return values;
     }
 
-    /**
-    private void setUpMenu(){
-        ImageView settings = findViewById(R.id.settings);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent detailsInent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(detailsInent);
-            }
-        });
-    }**/
-
-
 
     private void setListViewToClickResponse(ListView list){
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "ok i am on" , Toast.LENGTH_SHORT).show();
+                Intent editorInent = new Intent(MainActivity.this, EditorActivity.class);
+                startActivity(editorInent);
             }
         });
     }

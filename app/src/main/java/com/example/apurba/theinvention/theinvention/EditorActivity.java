@@ -1,9 +1,14 @@
 package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +25,7 @@ import com.example.apurba.theinvention.theinvention.data.InventoryContract.Inven
  * Created by Apurba on 5/1/2018.
  */
 
-public class EditorActivity extends AppCompatActivity {
+public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private EditText nameEditText;
     private EditText descriptionEditText;
@@ -36,10 +41,16 @@ public class EditorActivity extends AppCompatActivity {
     private String platform;
     private String type;
     private String url;
+
+    private Uri selectedInventUri = null;
+    private static final int EXISTING_INVENTORY_LOADER = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editor);
+
+        Intent intent = getIntent();
+        selectedInventUri  = intent.getData();
 
         mStatusSpinner = findViewById(R.id.status_spinner);
         nameEditText = findViewById(R.id.edit_invention_name);
@@ -50,9 +61,11 @@ public class EditorActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
 
         setUpSpinner();
+
+        if (selectedInventUri != null ){
+            getSupportLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
+        }
         setUpSaveButton();
-
-
     }
 
     private void setUpSaveButton(){
@@ -142,6 +155,75 @@ public class EditorActivity extends AppCompatActivity {
                 mStatus = InventoryEntry.STATUS_IN_FUTURE;
             }
         });
+    }
+
+
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String[] projection = {InventoryEntry._ID,
+                InventoryEntry.COLUMN_INVENTORY_NAME,
+                InventoryEntry.COLUMN_STATUS,
+                InventoryEntry.COLUMN_INVENTORY_URL,
+                InventoryEntry.COLUMN_INVENTORY_DESCRIPTION,
+                InventoryEntry.COLUMN_INVENTORY_PLATFORM,
+                InventoryEntry.COLUMN_INVENTORY_TYPE};
+        return new CursorLoader(this,
+                selectedInventUri,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (data.moveToFirst()){
+            int nameColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_NAME);
+            int statusColIndex = data.getColumnIndex(InventoryEntry.COLUMN_STATUS);
+            int urlColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_URL);
+            int descColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_DESCRIPTION);
+            int platformColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_PLATFORM);
+            int typeColIndex = data.getColumnIndex(InventoryEntry.COLUMN_INVENTORY_TYPE);
+
+            String name = data.getString(nameColIndex);
+            int status = data.getInt(statusColIndex);
+            String url = data.getString(urlColIndex);
+            String description = data.getString(descColIndex);
+            String platform = data.getString(platformColIndex);
+            String type = data.getString(typeColIndex);
+
+            setAllViews(name, status, url, description, platform, type);
+        }
+    }
+    private void setAllViews(String name, int status, String url, String description, String platform, String type){
+        nameEditText.setText(name);
+        descriptionEditText.setText(description);
+        platformEditText.setText(platform);
+        typeEditText.setText(type);
+        urlEditText.setText(url);
+
+        switch (status){
+            case InventoryEntry.STATUS_COMPLETE:
+                mStatusSpinner.setSelection(InventoryEntry.STATUS_COMPLETE);
+                break;
+            case InventoryEntry.STATUS_RUNNING:
+                mStatusSpinner.setSelection(InventoryEntry.STATUS_RUNNING);
+                break;
+            case InventoryEntry.STATUS_IN_FUTURE:
+                mStatusSpinner.setSelection(InventoryEntry.STATUS_IN_FUTURE);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        nameEditText.setText("");
+        descriptionEditText.setText("");
+        platformEditText.setText("");
+        typeEditText.setText("");
+        urlEditText.setText("");
+        mStatusSpinner.setSelection(InventoryEntry.STATUS_IN_FUTURE);
     }
 }
 

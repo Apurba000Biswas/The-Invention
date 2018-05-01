@@ -1,6 +1,5 @@
 package com.example.apurba.theinvention.theinvention;
 
-import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.apurba.theinvention.theinvention.data.InventoryContract.InventoryEntry;
@@ -29,10 +27,18 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     private static final int EXISTING_INVENTORY_LOADER = 0;
     private Uri selectedInventoryUri = null;
     private CollapsingToolbarLayout mCollapsingToolBar;
+
+    private TextView statusTexView;
+    private TextView urlTextView;
+    private TextView descTextView;
+    private TextView plarformTextView;
+    private TextView typeTextView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invention_details);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,7 +46,11 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
 
         mCollapsingToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
 
-
+        statusTexView = findViewById(R.id.status);
+        urlTextView = findViewById(R.id.url);
+        descTextView = findViewById(R.id.description);
+        plarformTextView = findViewById(R.id.platform);
+        typeTextView = findViewById(R.id.type);
 
         setUpEditInvention();
 
@@ -58,8 +68,7 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
             @Override
             public void onClick(View view) {
                 Intent editorInent = new Intent(InventoryDetailsActivity.this, EditorActivity.class);
-                //Uri uri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
-                //detailsInent.setData(uri);
+                editorInent.setData(selectedInventoryUri);
                 startActivity(editorInent);
             }
         });
@@ -106,12 +115,6 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     }
 
     private void setAllViews(int status, String url, String description, String platform, String type){
-        TextView statusTexView = findViewById(R.id.status);
-        TextView urlTextView = findViewById(R.id.url);
-        TextView descTextView = findViewById(R.id.description);
-        TextView plarformTextView = findViewById(R.id.platform);
-        TextView typeTextView = findViewById(R.id.type);
-
         statusTexView.setText(InventoryEntry.getValidStatus(status));
         urlTextView.setText(url);
         descTextView.setText(description);
@@ -121,6 +124,10 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        statusTexView.setText("");
+        urlTextView.setText("");
+        descTextView.setText("");
+        plarformTextView.setText("");
+        typeTextView.setText("");
     }
 }

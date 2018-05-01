@@ -57,7 +57,6 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(InventoryDetailsActivity.this, "edit clciked", Toast.LENGTH_SHORT).show();
                 Intent editorInent = new Intent(InventoryDetailsActivity.this, EditorActivity.class);
                 //Uri uri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
                 //detailsInent.setData(uri);

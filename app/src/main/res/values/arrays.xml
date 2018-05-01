@@ -5,4 +5,11 @@
         <item>@string/action_insert_dummy_invention</item>
         <item>@string/action_delete_all_inventions</item>
     </string-array>
+
+    <string-array name="status_option">
+        <item>@string/action_complete</item>
+        <item>@string/action_running</item>
+        <item>@string/action_in_future</item>
+    </string-array>
+
 </resources>

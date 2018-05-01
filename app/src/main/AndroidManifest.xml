@@ -27,6 +27,7 @@
 
         <activity
             android:name=".EditorActivity"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

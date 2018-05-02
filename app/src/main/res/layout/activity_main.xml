@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
     tools:context="com.example.apurba.theinvention.theinvention.MainActivity">
 
     <RelativeLayout
         android:id="@+id/header"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:elevation="8dp"
         android:layout_height="90dp">
 
         <TextView
@@ -19,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/headerBackground"
             android:text="The Invention"/>
 
         <ImageView
@@ -58,8 +57,10 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/background"
         android:layout_alignParentBottom="true"
         android:src="@drawable/fab_button"
+        android:background="@color/background"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"/>
 

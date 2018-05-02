@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d36c13</color>
-    <color name="colorPrimaryDark">#d36c13</color>
+    <color name="colorPrimary">#232935</color>
+    <color name="colorPrimaryDark">#232935</color>
     <color name="colorAccent">#d36c13</color>
+
+    <color name="background">#232935</color>
+
+    <color name="mainTextColor">#9E9E9E</color>
+    <color name="subTextColor">#757575</color>
+    <color name="cardBackground">#422f3c</color>
+
+    <color name="headerBackground">#616161</color>
+
 
     <!--#d36c13-->
 </resources>

@@ -1,6 +1,9 @@
 package com.example.apurba.theinvention.theinvention;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +16,9 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,6 +64,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
 
+    private ActionMode mActionMode;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +98,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         typeEditText.setOnTouchListener(mTouchListener);
         urlEditText.setOnTouchListener(mTouchListener);
         mStatusSpinner.setOnTouchListener(mTouchListener);
+
+        urlEditText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mActionMode = EditorActivity.this.startActionMode(new ActionBarCallBack());
+                return true;
+            }
+        });
 
         setUpSaveButton();
     }
@@ -303,6 +319,47 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         urlEditText.setText("");
         mStatusSpinner.setSelection(InventoryEntry.STATUS_IN_FUTURE);
     }
+
+
+
+
+
+
+
+
+    class ActionBarCallBack implements ActionMode.Callback{
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            actionMode.getMenuInflater().inflate(R.menu.contextual_menu, menu);
+            return true;
+        }
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            int id = menuItem.getItemId();
+            if(id == R.id.item_paste)
+            {
+                //Toast.makeText(EditorActivity.this,"paste selected",Toast.LENGTH_LONG).show();
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                if(clipboard.hasPrimaryClip()== true) {
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                    String pasteText = item.getText().toString();
+                    urlEditText.setText(pasteText);
+                    Toast.makeText(getApplicationContext(), " Paste Complete ", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Nothing to Paste", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return false;
+        }
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+
+        }
+    }
 }
 
 class IllegalValueException extends Exception {
@@ -310,3 +367,5 @@ class IllegalValueException extends Exception {
         super(message);
     }
 }
+
+

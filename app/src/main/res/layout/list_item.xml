@@ -16,13 +16,21 @@
         android:layout_gravity="center_horizontal"
         android:elevation="10dp"
         card_view:cardBackgroundColor="@color/cardBackground"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="6dp">
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_name"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_height="match_parent">
+
 
             <TextView
                 android:id="@+id/invention_name"

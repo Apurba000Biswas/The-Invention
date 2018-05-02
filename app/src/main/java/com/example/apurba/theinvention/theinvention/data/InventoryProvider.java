@@ -42,15 +42,15 @@ public class InventoryProvider extends ContentProvider{
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        // get readeble database
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        // get readable database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         // declare a cursor
         Cursor cursor = null;
         int match = sUriMatcher.match(uri);
         switch (match){
             case INVENTORY:
-                /**
+                /*
                  * Cursor query (String table,
                  String[] columns,
                  String selection,
@@ -66,6 +66,7 @@ public class InventoryProvider extends ContentProvider{
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
         }
+
         cursor.setNotificationUri(getContext().getContentResolver(),uri);
         return cursor;
     }

@@ -1,6 +1,7 @@
 package com.example.apurba.theinvention.theinvention;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,8 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,6 +48,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private Uri selectedInventUri = null;
     private static final int EXISTING_INVENTORY_LOADER = 0;
+
+    private boolean mInventionHasChanged = false;
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mInventionHasChanged = true;
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +72,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         platformEditText = findViewById(R.id.edit_platform);
         typeEditText = findViewById(R.id.edit_type);
         urlEditText = findViewById(R.id.edit_url);
+
         saveButton = findViewById(R.id.save_button);
 
         setUpSpinner();
@@ -67,9 +81,57 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             getSupportLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
         }else {
             TextView header = findViewById(R.id.editor_header);
-            header.setText("Add a new invention");
+            header.setText(R.string.header_name);
         }
+
+        nameEditText.setOnTouchListener(mTouchListener);
+        descriptionEditText.setOnTouchListener(mTouchListener);
+        platformEditText.setOnTouchListener(mTouchListener);
+        typeEditText.setOnTouchListener(mTouchListener);
+        urlEditText.setOnTouchListener(mTouchListener);
+        mStatusSpinner.setOnTouchListener(mTouchListener);
+
         setUpSaveButton();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // if not changed
+        if (!mInventionHasChanged){
+            super.onBackPressed();
+            return;
+        }
+        // if changed
+        DialogInterface.OnClickListener discardButtonClickeListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // User clicked "Discard" button, close the current activity.
+                        finish();
+                    }
+                };
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClickeListener);
+
+    }
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        // positive button
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        // negative button
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void setUpSaveButton(){
@@ -91,23 +153,23 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private void saveInvention(){
         ContentValues values = getContentValues();
         if (selectedInventUri == null){
-            // perfrom insertion
+            // perform insertion
             Uri responseUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
             if (responseUri == null){
-                // faild
+                // failed
                 Toast.makeText(this, "Eror with saving invention", Toast.LENGTH_SHORT).show();
             }else{
-                // successfull
+                // successful
                 Toast.makeText(this, "Invention saved", Toast.LENGTH_SHORT).show();
             }
         }else{
-            // perfrom update
+            // perform update
             int rowsUpdated = getContentResolver().update(selectedInventUri, values, null, null);
             if (rowsUpdated == 0){
-                // faild
+                // failed
                 Toast.makeText(this, "Eror with updating invention", Toast.LENGTH_SHORT).show();
             }else {
-                // successfull
+                // successful
                 Toast.makeText(this, "Invention updated", Toast.LENGTH_SHORT).show();
             }
         }
@@ -174,8 +236,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
     }
-
-
 
 
     @Override
@@ -246,7 +306,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 }
 
 class IllegalValueException extends Exception {
-    public IllegalValueException(String message) {
+     IllegalValueException(String message) {
         super(message);
     }
 }

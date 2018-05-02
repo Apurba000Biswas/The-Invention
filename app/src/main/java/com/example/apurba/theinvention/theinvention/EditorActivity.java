@@ -16,9 +16,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -64,7 +61,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,15 +69,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Intent intent = getIntent();
         selectedInventUri  = intent.getData();
 
-        mStatusSpinner = findViewById(R.id.status_spinner);
-        nameEditText = findViewById(R.id.edit_invention_name);
-        descriptionEditText = findViewById(R.id.edit_description);
-        platformEditText = findViewById(R.id.edit_platform);
-        typeEditText = findViewById(R.id.edit_type);
-        urlEditText = findViewById(R.id.edit_url);
-
-        saveButton = findViewById(R.id.save_button);
-
+        initAllViews();
         setUpSpinner();
 
         if (selectedInventUri != null ){
@@ -91,13 +79,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             header.setText(R.string.header_name);
         }
 
-        nameEditText.setOnTouchListener(mTouchListener);
-        descriptionEditText.setOnTouchListener(mTouchListener);
-        platformEditText.setOnTouchListener(mTouchListener);
-        typeEditText.setOnTouchListener(mTouchListener);
-        urlEditText.setOnTouchListener(mTouchListener);
-        mStatusSpinner.setOnTouchListener(mTouchListener);
+        setAllViewsWithTouchListener();
+        setUrlEditTextWithLongClick();
+        setUpSaveButton();
+    }
 
+    private void setUrlEditTextWithLongClick(){
         urlEditText.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -113,8 +100,26 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 return true;
             }
         });
+    }
 
-        setUpSaveButton();
+    private void setAllViewsWithTouchListener(){
+        nameEditText.setOnTouchListener(mTouchListener);
+        descriptionEditText.setOnTouchListener(mTouchListener);
+        platformEditText.setOnTouchListener(mTouchListener);
+        typeEditText.setOnTouchListener(mTouchListener);
+        urlEditText.setOnTouchListener(mTouchListener);
+        mStatusSpinner.setOnTouchListener(mTouchListener);
+    }
+
+    private void initAllViews(){
+        mStatusSpinner = findViewById(R.id.status_spinner);
+        nameEditText = findViewById(R.id.edit_invention_name);
+        descriptionEditText = findViewById(R.id.edit_description);
+        platformEditText = findViewById(R.id.edit_platform);
+        typeEditText = findViewById(R.id.edit_type);
+        urlEditText = findViewById(R.id.edit_url);
+
+        saveButton = findViewById(R.id.save_button);
     }
 
     @Override

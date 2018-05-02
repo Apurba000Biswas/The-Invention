@@ -2,20 +2,22 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimary"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/listItemBackground">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="@color/background"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="#1f071e">
+            android:background="@color/editorBackground"
+            android:paddingTop="16dp">
 
             <TextView
                 android:id="@+id/editor_header"
@@ -37,126 +39,139 @@
                 android:src="@drawable/save_button" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="Overview" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:orientation="vertical">
+                android:layout_margin="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CategoryStyle"
+                    android:text="Overview" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/edit_invention_name"
+                        style="@style/EditorFieldStyle"
+                        android:hint="Name"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/mainTextColor" />
+
+                    <Spinner
+                        android:id="@+id/status_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:paddingRight="16dp"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CategoryStyle"
+                    android:text="Description" />
 
                 <EditText
-                    android:id="@+id/edit_invention_name"
+                    android:id="@+id/edit_description"
                     style="@style/EditorFieldStyle"
-                    android:textColor="@color/mainTextColor"
-                    android:hint="Name"
-                    android:inputType="textCapWords" />
-
-                <Spinner
-                    android:id="@+id/status_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:paddingRight="16dp"
-                    android:spinnerMode="dropdown"/>
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:hint="This is all about new creation"
+                    android:textColor="@color/mainTextColor" />
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="Description" />
+                <TextView
+                    style="@style/CategoryStyle"
+                    android:text="Platfrom" />
 
-            <EditText
-                android:id="@+id/edit_description"
-                style="@style/EditorFieldStyle"
-                android:textColor="@color/mainTextColor"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:hint="This is all about new creation" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/edit_platform"
+                    style="@style/EditorFieldStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:hint="Android app"
+                    android:textColor="@color/mainTextColor" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="Platfrom" />
+                <TextView
+                    style="@style/CategoryStyle"
+                    android:text="Type" />
 
-            <EditText
-                android:id="@+id/edit_platform"
-                style="@style/EditorFieldStyle"
-                android:layout_width="0dp"
-                android:textColor="@color/mainTextColor"
-                android:layout_weight="2"
-                android:hint="Android app" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/edit_type"
+                    style="@style/EditorFieldStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:hint="Computer software"
+                    android:textColor="@color/mainTextColor" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="Type" />
+                <TextView
+                    style="@style/CategoryStyle"
+                    android:text="Url" />
 
-            <EditText
-                android:id="@+id/edit_type"
-                style="@style/EditorFieldStyle"
-                android:textColor="@color/mainTextColor"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:hint="Computer software" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/edit_url"
+                    style="@style/EditorFieldStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:hint="Enter Url here(optional)"
+                    android:inputType="textUri"
+                    android:textColor="@color/mainTextColor" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
 
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="Url" />
-
-            <EditText
-                android:id="@+id/edit_url"
-                android:inputType="textUri"
-                style="@style/EditorFieldStyle"
-                android:textColor="@color/mainTextColor"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:hint="Enter Url here(optional)" />
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:background="#1f071e"
-            android:layout_height="300dp">
+            android:layout_height="300dp"
+            android:background="@color/editorBackground"
+            android:orientation="vertical">
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="45dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/subTextColor"
+                android:textSize="12sp"
+                android:text="The Invention Revolution"/>
 
             <ImageView
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
                 android:src="@drawable/logo_skull"/>
 
         </RelativeLayout>

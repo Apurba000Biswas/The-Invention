@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
     }
+
     private void showSampleInsertConfirmationDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.insert_sample_invention_dialog_msg);
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ContentValues values = new ContentValues();
         values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_NAME, "The Invention");
         values.put(InventoryContract.InventoryEntry.COLUMN_STATUS, InventoryContract.InventoryEntry.STATUS_RUNNING);
-        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_URL, "no url yet");
+        values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_URL, "https://github.com/Apurba000Biswas/The-Invention.git");
         values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_DESCRIPTION, "This is all about new creation");
         values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_PLATFORM, "Android app");
         values.put(InventoryContract.InventoryEntry.COLUMN_INVENTORY_TYPE, "Computer Software");

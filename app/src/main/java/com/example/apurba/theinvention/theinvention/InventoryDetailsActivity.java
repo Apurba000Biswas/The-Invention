@@ -1,5 +1,6 @@
 package com.example.apurba.theinvention.theinvention;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,9 +15,11 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,12 +37,14 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     private CollapsingToolbarLayout mCollapsingToolBar;
 
     private TextView statusTexView;
-    private TextView urlTextView;
+    //private TextView urlTextView;
     private TextView descTextView;
     private TextView platformTextView;
     private TextView typeTextView;
+    private Button gotoWebsite;
 
     private String mName;
+    private String url = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,10 +59,12 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
         mCollapsingToolBar = findViewById(R.id.collapse_toolbar);
 
         statusTexView = findViewById(R.id.status);
-        urlTextView = findViewById(R.id.url);
         descTextView = findViewById(R.id.description);
         platformTextView = findViewById(R.id.platform);
         typeTextView = findViewById(R.id.type);
+        gotoWebsite = findViewById(R.id.goto_website);
+
+        setUpGotoWebsiteButton();
 
         setUpEditInvention();
 
@@ -67,6 +74,24 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
         if (selectedInventoryUri != null ){
             getSupportLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
         }
+    }
+
+    private void setUpGotoWebsiteButton(){
+        gotoWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!TextUtils.isEmpty(url)){
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                    }catch (ActivityNotFoundException ex){
+                        Toast.makeText(InventoryDetailsActivity.this, "Not valid url", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(InventoryDetailsActivity.this, "No url found", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void setUpEditInvention(){
@@ -164,19 +189,18 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
 
             mName = data.getString(nameColIndex);
             int status = data.getInt(statusColIndex);
-            String url = data.getString(urlColIndex);
+            url = data.getString(urlColIndex);
             String description = data.getString(descColIndex);
             String platform = data.getString(platformColIndex);
             String type = data.getString(typeColIndex);
 
             mCollapsingToolBar.setTitle(mName);
-            setAllViews(status, url, description, platform, type);
+            setAllViews(status, description, platform, type);
         }
     }
 
-    private void setAllViews(int status, String url, String description, String platform, String type){
+    private void setAllViews(int status, String description, String platform, String type){
         statusTexView.setText(InventoryEntry.getValidStatus(status));
-        urlTextView.setText(url);
         descTextView.setText(description);
         platformTextView.setText(platform);
         typeTextView.setText(type);
@@ -185,7 +209,7 @@ public class InventoryDetailsActivity extends AppCompatActivity implements Loade
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         statusTexView.setText("");
-        urlTextView.setText("");
+        url = "";
         descTextView.setText("");
         platformTextView.setText("");
         typeTextView.setText("");

@@ -6,17 +6,17 @@
 
     <color name="background">#232935</color>
 
-    <color name="mainTextColor">#9E9E9E</color>
-    <color name="subTextColor">#757575</color>
+    <color name="mainTextColor">#B0BEC5</color>
+    <color name="subTextColor">#455A64</color>
     <color name="cardBackground">#232935</color>
 
     <color name="headerBackground">#616161</color>
-    <color name="editorBackground">#1f071e</color>
+    <color name="editorBackground">#1a0e29</color>
     <color name="mainBackground">#CFD8DC</color>
     <color name="mainBarColor">#251635</color>
 
-    <color name="listItemBackground">#1a0e29</color>
+    <color name="listItemBackground">#cfd8dc</color>
 
 
-    <!--#d36c13-->
+    <!--#1a0e29-->
 </resources>

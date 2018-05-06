@@ -33,8 +33,6 @@
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
-
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -70,6 +68,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:layout_marginTop="16dp"
             android:layout_height="match_parent">
 
 
@@ -81,7 +80,7 @@
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="10dp"
-                card_view:cardBackgroundColor="@color/colorPrimary"
+                card_view:cardBackgroundColor="@color/mainBarColor"
                 card_view:cardCornerRadius="6dp">
 
 
@@ -91,13 +90,17 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:textSize="20sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="16dp"
                         android:text="Overview"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/mainTextColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <LinearLayout
-                        android:layout_margin="16dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -114,7 +117,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_margin="16dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="16dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -131,7 +135,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_margin="16dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -147,18 +153,9 @@
 
                     </LinearLayout>
 
-
-
-
-
-
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
-
-
-
-
 
             <android.support.v7.widget.CardView
                 android:layout_below="@id/overView_card"
@@ -169,9 +166,8 @@
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="10dp"
-                card_view:cardBackgroundColor="@color/colorPrimary"
+                card_view:cardBackgroundColor="@color/mainBarColor"
                 card_view:cardCornerRadius="6dp">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -179,8 +175,11 @@
                     android:orientation="vertical">
 
                 <TextView
-
+                    android:textSize="20sp"
                     style="@style/level"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="16dp"
                     android:text="Description: " />
 
                 <TextView
@@ -195,21 +194,13 @@
 
             <Button
                 android:layout_alignParentBottom="true"
+                android:paddingBottom="16dp"
                 android:id="@+id/goto_website"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/mainTextColor"
                 android:text="Go to Website"
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-
-
-
-
-
-
-
+                android:layout_height="60dp" />
 
         </RelativeLayout>
 

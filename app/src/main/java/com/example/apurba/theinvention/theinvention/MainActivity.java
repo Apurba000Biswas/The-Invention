@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mCursorAdapter = new InventoryCursorAdapter(this, null);
         inventionListView.setAdapter(mCursorAdapter);
 
+        View emptyView = findViewById(R.id.empty_view);
+        inventionListView.setEmptyView(emptyView);
+
         setListViewToClickResponse(inventionListView);
 
         getSupportLoaderManager().initLoader(INVENTION_LOADER, null, this);

@@ -28,3 +28,8 @@ Screen shots
 <div align="center">
   <img src ="screen_shot/img4.png" width ="200"> <img src ="screen_shot/img5.png" width ="200"> <img src ="screen_shot/img6.png" width ="200">
 </div>
+
+Usage
+--------------
+
+This app requires Android version 7.0 or higher. Download the [APK](https://github.com/Apurba000Biswas/Disaster-Response/tree/master/APK) and install it on your phone.

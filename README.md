@@ -8,10 +8,6 @@ This app kepps track of new inventions. It can be any kind of inventions such as
 - Android Build Tools v26.1.0
 - Android Support Repository v26.3.0
 
-## Code style
-
-Standard
-
 App preview
 --------------
 
